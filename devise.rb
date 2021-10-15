@@ -26,7 +26,7 @@ gsub_file('Gemfile', /# gem 'redis'/, "gem 'redis'")
 ########################################
 run 'rm -rf app/assets/stylesheets'
 run 'rm -rf vendor'
-run 'curl -L https://github.com/lewagon/rails-stylesheets/archive/master.zip > stylesheets.zip'
+run 'curl -L https://github.com/gn13008/rails-stylesheets/archive/master.zip > stylesheets.zip'
 run 'unzip stylesheets.zip -d app/assets && rm stylesheets.zip && mv app/assets/rails-stylesheets-master app/assets/stylesheets'
 
 # Dev environment
@@ -72,20 +72,26 @@ file 'app/views/shared/_flashes.html.erb', <<~HTML
   <% end %>
 HTML
 
-run 'curl -L https://github.com/lewagon/awesome-navbars/raw/master/templates/_navbar_wagon.html.erb > app/views/shared/_navbar.html.erb'
+run 'curl -L https://github.com/gn13008/rails-shared-templates/raw/master/templates/_navbar.html.erb > app/views/shared/_navbar.html.erb'
+run 'curl -L https://github.com/gn13008/rails-shared-templates/raw/master/templates/_footer.html.erb > app/views/shared/_footer.html.erb'
 
 inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
   <<-HTML
-
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
+    
+    <div class="body">
+      <%= yield %>
+    </div>
+
+    <%= render 'shared/footer' %>
   HTML
 end
 
 # README
 ########################################
 markdown_file_content = <<-MARKDOWN
-Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
+Rails app generated with personal rails template (https://github.com/gn13008/rails-templates) updated from lewagon rails template.
 MARKDOWN
 file 'README.md', markdown_file_content, force: true
 
@@ -211,5 +217,5 @@ after_bundle do
   # Git
   ########################################
   git add: '.'
-  git commit: "-m 'Initial commit with devise template from https://github.com/lewagon/rails-templates'"
+  git commit: "-m 'Initial commit with devise template from https://github.com/gn13008/rails-templates'"
 end
