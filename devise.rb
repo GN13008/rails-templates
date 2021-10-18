@@ -81,7 +81,11 @@ inject_into_file 'app/views/layouts/application.html.erb', after: '<body>' do
     <%= render 'shared/flashes' %>
     
     <div class="body">
-      <%= yield %>
+  HTML
+end
+
+inject_into_file 'app/views/layouts/application.html.erb', before: '</body>' do
+  <<-HTML
     </div>
 
     <%= render 'shared/footer' %>
